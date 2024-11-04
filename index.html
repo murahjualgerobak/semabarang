@@ -1,81 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Game Shooting Sederhana</title>
+  <title>Marketplace Sederhana</title>
   <style>
+    /* Gaya CSS di sini */
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      overflow: hidden;
+      padding: 20px;
     }
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
+    .product {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .product img {
+      max-width: 100%;
     }
   </style>
 </head>
 <body>
-  <canvas id="myCanvas"></canvas>
+  <h1>Marketplace Sederhana</h1>
+
+  <div id="products">
+    </div>
+
   <script>
-    const canvas = document.getElementById('myCanvas');
-    const ctx = canvas.getContext('2d');
+    // Data produk (contoh)
+    const products = [
+      {
+        name: "Produk A",
+        price: 10000,
+        image: "https://via.placeholder.com/150"
+      },
+      {
+        name: "Produk B",
+        price: 20000,
+        image: "https://via.placeholder.com/150"
+      }
+    ];
 
-    // Sesuaikan ukuran canvas dengan jendela browser
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Variabel untuk pemain dan peluru
-    let player = {
-      x: canvas.width / 2,
-      y: canvas.height - 50,
-      width: 20,
-      height: 20,
-      speed: 5
-    };
-
-    let bullets = [];
-
-    // Fungsi untuk menggambar
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Gambar pemain
-      ctx.fillRect(player.x, player.y, player.width, player.height);
-
-      // Gambar peluru
-      bullets.forEach(bullet => {
-        ctx.fillRect(bullet.x, bullet.y, 5, 5);
-        bullet.y -= 5;
+    // Fungsi untuk menampilkan produk
+    function displayProducts() {
+      const productsContainer = document.getElementById('products');
+      products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.classList.add('product');
+        productElement.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h2>${product.name}</h2>
+          <p>Rp ${product.price}</p>
+          <button>Beli</button>
+        `;
+        productsContainer.appendChild(productElement);
       });
-
-      // Hapus peluru yang sudah keluar dari layar
-      bullets = bullets.filter(bullet => bullet.y > 0);
-
-      requestAnimationFrame(draw);
     }
 
-    // Event listener untuk pergerakan
-    document.addEventListener('keydown', (event) => {
-      switch (event.key) {
-        case 'ArrowLeft':
-          player.x -= player.speed;
-          break;
-        case 'ArrowRight':
-          player.x += player.speed;
-          break;
-      }
-    });
-
-    // Batasi pergerakan pemain agar tidak keluar dari layar
-    function keepPlayerInBounds() {
-      if (player.x < 0) {
-        player.x = 0;
-      } else if (player.x + player.width > canvas.width) {
-        player.x = canvas.width - player.width;
-      }
-    }
-
-    draw();
+    // Panggil fungsi untuk menampilkan produk
+    displayProducts();
   </script>
 </body>
 </html>
